@@ -7,13 +7,13 @@ events = {
     "meetings": [],
     "training": [],
     "project_deadlines": [],
-    "internalevent": [],
-    "clientpresentation": [],
+    "internal_events": [],
+    "client_presentations": [],
     "shift_schedules": [],
     "resources": set(),
     "conferences": [],
-    "performancereview": [],
-    "onboardingsession": []
+    "performance_reviews": [],
+    "onboarding_sessions": []
 }
 
 employees = set()
@@ -105,31 +105,31 @@ def main():
 
 
     if selected == "Home":
-        homepage()
+        home_page()
     elif selected == "Meeting Management":
-        meetingmanagement()
+        meeting_management()
     elif selected == "Employee Training":
-        employetraining()
+        employee_training()
     elif selected == "Project Deadlines":
-        manageproject()
+        manage_projects()
     elif selected == "Internal Events":
-        internalevent()
+        internal_events()
     elif selected == "Client Presentations":
-        clientpresentation()
+        client_presentations()
     elif selected == "Shift Scheduling":
-        shiftscheduling()
+        shift_scheduling()
     elif selected == "Resource Allocation":
-        resourceallocation()
+        resource_allocation()
     elif selected == "Conferences":
-        manageconference()
+        manage_conferences()
     elif selected == "Performance Reviews":
-        performancereview()
+        performance_reviews()
     elif selected == "Onboarding Sessions":
-        onboardingsession()
+        onboarding_sessions()
     elif selected == "Blog":
-        blogpage()
+        blog_page()
 
-def homepage():
+def home_page():
     st.write('<h1 class="main-title">Welcome to IT Event Scheduler</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage your meetings, training sessions, project deadlines, and more with ease.</p>', unsafe_allow_html=True)
     st.write('<p class="subheader-text">Latest Blog Posts</p>', unsafe_allow_html=True)
@@ -141,22 +141,22 @@ def homepage():
     else:
         st.write("No blog posts available.")
 
-def blogpage():
+def blog_page():
     st.write('<h1 class="main-title">Blog</h1>', unsafe_allow_html=True)
     
     # Blog creation form
     st.write('<p class="info-text">Create and view blog posts about recent and upcoming events.</p>', unsafe_allow_html=True)
-    blogtitle = st.text_input("Blog Title")
-    blogcontent = st.text_area("Blog Content")
-    blogdate = st.date_input("Blog Date", value=datetime.now().date())
+    blog_title = st.text_input("Blog Title")
+    blog_content = st.text_area("Blog Content")
+    blog_date = st.date_input("Blog Date", value=datetime.now().date())
     
     # Create blog post
     if st.button("Post Blog"):
-        if blogtitle and blogcontent:
+        if blog_title and blog_content:
             blogs.append({
-                "title": blogtitle, 
-                "content": blogcontent, 
-                "date": blogdate.strftime('%Y-%m-%d')  # Format date for display
+                "title": blog_title, 
+                "content": blog_content, 
+                "date": blog_date.strftime('%Y-%m-%d')  # Format date for display
             })
             st.success("Blog Post Created!")
         else:
@@ -175,7 +175,7 @@ def blogpage():
         st.write("No blog posts available.")
 
 
-def meetingmanagement():
+def meeting_management():
     st.write('<h1 class="main-title">Meeting Management</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Schedule and manage meetings with your team.</p>', unsafe_allow_html=True)
 
@@ -212,12 +212,14 @@ def meetingmanagement():
 
 
 
-def employetraining():
+def employee_training():
     st.write('<h1 class="main-title">Employee Training</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Organize training sessions for employees.</p>', unsafe_allow_html=True)
+
     session = st.text_input("Enter Training Session")
     trainer = st.text_input("Enter Trainer Name")
     date = st.date_input("Training Date")
+    
     if st.button("Schedule Training"):
         events["training"].append({"session": session, "trainer": trainer, "date": date})
         st.success("Training Session Scheduled!")
@@ -231,7 +233,7 @@ def employetraining():
             
             # Add buttons for updating and deleting each training session
             col1, col2 = st.columns(2)
-        
+            
             with col1:
                 if st.button(f"Update {t['session']}"):
                     # Allow user to update the details
@@ -254,7 +256,7 @@ def employetraining():
         st.write("No training sessions scheduled.")
 
 
-def manageproject():
+def manage_projects():
     st.write('<h1 class="main-title">Project Management</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage your projects efficiently.</p>', unsafe_allow_html=True)
     events = {
@@ -302,21 +304,21 @@ def manageproject():
     else:
         st.write("No projects currently available.")
 
-def internalevent():
+def internal_events():
     st.title("Internal Events")
     st.write('<p class="info-text">Schedule and manage internal events.</p>', unsafe_allow_html=True)
     
     event_name = st.text_input("Enter Event Name")
     event_date = st.date_input("Event Date")
     if st.button("Schedule Event"):
-        events["internalevent"].append((event_name, event_date))
+        events["internal_events"].append((event_name, event_date))
         st.success("Internal Event Scheduled!")
     
     st.write('<p class="subheader-text">Internal Events</p>', unsafe_allow_html=True)
-    for e in events["internalevent"]:
+    for e in events["internal_events"]:
         st.write(f"Event: {e[0]}, Date: {e[1]}")
 
-def clientpresentation():
+def client_presentations():
     st.title("Client Presentations")
     st.write('<p class="info-text">Organize and schedule client presentations.</p>', unsafe_allow_html=True)
     
@@ -324,57 +326,57 @@ def clientpresentation():
     client_name = st.text_input("Enter Client Name")
     presentation_date = st.date_input("Presentation Date")
     if st.button("Schedule Presentation"):
-        events["clientpresentation"].append((presentation_name, client_name, presentation_date))
+        events["client_presentations"].append((presentation_name, client_name, presentation_date))
         st.success("Client Presentation Scheduled!")
     
     st.write('<p class="subheader-text">Client Presentations</p>', unsafe_allow_html=True)
-    for p in events["clientpresentation"]:
+    for p in events["client_presentations"]:
         st.write(f"Presentation: {p[0]}, Client: {p[1]}, Date: {p[2]}")
 
-def shiftscheduling():
+def shift_scheduling():
     st.title("Shift Scheduling")
     st.write('<p class="info-text">Manage employee shifts and schedules.</p>', unsafe_allow_html=True)
     
-    empname = st.text_input("Enter Employee Name")
-    shiftdate = st.date_input("Shift Date")
-    shifttime = st.text_input("Enter Shift Time")
+    employee_name = st.text_input("Enter Employee Name")
+    shift_date = st.date_input("Shift Date")
+    shift_time = st.text_input("Enter Shift Time")
     if st.button("Schedule Shift"):
-        events["shift_schedules"].append((empname, shiftdate, shifttime))
+        events["shift_schedules"].append((employee_name, shift_date, shift_time))
         st.success("Shift Scheduled!")
     
     st.write('<p class="subheader-text">Shift Schedules</p>', unsafe_allow_html=True)
     for s in events["shift_schedules"]:
         st.write(f"Employee: {s[0]}, Date: {s[1]}, Time: {s[2]}")
 
-def resourceallocation():
+def resource_allocation():
     st.title("Resource Allocation")
     st.write('<p class="info-text">Allocate and manage resources.</p>', unsafe_allow_html=True)
     
-    resourcename = st.text_input("Enter Resource Name")
-    allocatedate = st.date_input("Allocation Date")
+    resource_name = st.text_input("Enter Resource Name")
+    allocation_date = st.date_input("Allocation Date")
     if st.button("Allocate Resource"):
-        events["resources"].add((resourcename, allocatedate))
+        events["resources"].add((resource_name, allocation_date))
         st.success("Resource Allocated!")
     
     st.write('<p class="subheader-text">Allocated Resources</p>', unsafe_allow_html=True)
     for r in events["resources"]:
         st.write(f"Resource: {r[0]}, Date: {r[1]}")
 
-def manageconference():
+def manage_conferences():
     st.write('<h1 class="main-title">Conference Management</h1>', unsafe_allow_html=True)
     st.write('<p class="info-text">Manage your conferences effectively.</p>', unsafe_allow_html=True)
 
     # Input fields for adding a new conference
-    conferencename = st.text_input("Enter Conference Name")
-    conferencedate = st.date_input("Conference Date")
+    conference_name = st.text_input("Enter Conference Name")
+    conference_date = st.date_input("Conference Date")
     location = st.text_input("Enter Conference Location")
     attendees = st.number_input("Number of Attendees", min_value=1, value=10)
 
     # Add conference button
     if st.button("Add Conference"):
         events["conferences"].append({
-            "name": conferencename, 
-            "date": conferencedate, 
+            "name": conference_name, 
+            "date": conference_date, 
             "location": location, 
             "attendees": attendees
         })
@@ -393,19 +395,19 @@ def manageconference():
             with col1:
                 if st.button(f"Update {conference['name']}"):
                     # Allow user to update the details
-                    newconfname = st.text_input(f"Update Conference Name for {conference['name']}", value=conference['name'])
-                    newconfdate = st.date_input(f"Update Conference Date for {conference['date']}", value=conference['date'])
-                    newlocation = st.text_input(f"Update Location for {conference['location']}", value=conference['location'])
-                    newattende = st.number_input(f"Update Number of Attendees for {conference['attendees']}", min_value=1, value=conference['attendees'])
+                    new_conference_name = st.text_input(f"Update Conference Name for {conference['name']}", value=conference['name'])
+                    new_conference_date = st.date_input(f"Update Conference Date for {conference['date']}", value=conference['date'])
+                    new_location = st.text_input(f"Update Location for {conference['location']}", value=conference['location'])
+                    new_attendees = st.number_input(f"Update Number of Attendees for {conference['attendees']}", min_value=1, value=conference['attendees'])
                     
                     if st.button(f"Confirm Update for {conference['name']}"):
                         events["conferences"][i] = {
-                            "name": newconfname, 
-                            "date": newconfdate, 
-                            "location": newlocation, 
-                            "attendees": newattende
+                            "name": new_conference_name, 
+                            "date": new_conference_date, 
+                            "location": new_location, 
+                            "attendees": new_attendees
                         }
-                        st.success(f"Conference {newconfname} updated successfully!")
+                        st.success(f"Conference {new_conference_name} updated successfully!")
 
             with col2:
                 if st.button(f"Delete {conference['name']}"):
@@ -418,44 +420,44 @@ def manageconference():
         st.write("No conferences currently available.")
 
 
-def performancereview():
+def performance_reviews():
     st.title("Performance Reviews")
     st.write('<p class="info-text">Provide performance reviews for employees.</p>', unsafe_allow_html=True)
     
-    empname = st.text_input("Enter Employee Name")
+    employee_name = st.text_input("Enter Employee Name")
     employee_id = st.text_input("Enter Employee ID")
-    performrate = st.slider("Rate Performance (1 to 5)", 1, 5)
-    reviewremark = st.text_area("Enter Remarks")
+    performance_rating = st.slider("Rate Performance (1 to 5)", 1, 5)
+    review_remarks = st.text_area("Enter Remarks")
     
     if st.button("Submit Review"):
     
-        events["performancereview"].append({
-            "empname": empname,
+        events["performance_reviews"].append({
+            "employee_name": employee_name,
             "employee_id": employee_id,
-            "rating": performrate,
-            "remarks": reviewremark
+            "rating": performance_rating,
+            "remarks": review_remarks
         })
         st.success("Performance Review Submitted!")
     
   
 
-for r in events["performancereview"]:
-        st.write(f"Employee: {r['empname']}, ID: {r['employee_id']}, Rating: {r['rating']}/5")
+for r in events["performance_reviews"]:
+        st.write(f"Employee: {r['employee_name']}, ID: {r['employee_id']}, Rating: {r['rating']}/5")
         st.write(f"Remarks: {r['remarks']}")
         st.write("---")
-def onboardingsession():
+def onboarding_sessions():
     st.title("Onboarding Sessions")
     st.write('<p class="info-text">Plan onboarding sessions for new employees.</p>', unsafe_allow_html=True)
     
-    sessioname = st.text_input("Enter Onboarding Session Name")
-    sessiondate = st.date_input("Session Date")
+    session_name = st.text_input("Enter Onboarding Session Name")
+    session_date = st.date_input("Session Date")
     if st.button("Schedule Onboarding Session"):
-        events["onboardingsession"].append((sessioname, sessiondate))
+        events["onboarding_sessions"].append((session_name, session_date))
         st.success("Onboarding Session Scheduled!")
     
     st.write('<p class="subheader-text">Scheduled Onboarding Sessions</p>', unsafe_allow_html=True)
-    for s in events["onboardingsession"]:
+    for s in events["onboarding_sessions"]:
         st.write(f"Session: {s[0]}, Date: {s[1]}")
 
-if __name__ == '_main_':
-  main()
+if _name_ == '_main_':
+    main()
