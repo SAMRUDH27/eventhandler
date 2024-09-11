@@ -42,8 +42,8 @@ def main():
         <style>
         /* General layout and style */
         body {
-            background-color: #212121; /* Dark background for the entire app */
-            color: #FFFFFF; /* Light text for readability */
+            background-color: #212121; 
+            color: #FFFFFF; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
             background-image: url(r"C:\Users\SANDHYA M\Desktop\1.png");
             background-size: cover;
@@ -82,7 +82,7 @@ def main():
             transition: background-color 0.3s ease;
         }
         .stButton>button:hover {
-            background-color: #e67e22; /* Change color on hover for better UX */
+            background-color: #e67e22; 
         }
            
         input, textarea {
@@ -144,31 +144,31 @@ def home_page():
 def blog_page():
     st.write('<h1 class="main-title">Blog</h1>', unsafe_allow_html=True)
     
-    # Blog creation form
+
     st.write('<p class="info-text">Create and view blog posts about recent and upcoming events.</p>', unsafe_allow_html=True)
     blog_title = st.text_input("Blog Title")
     blog_content = st.text_area("Blog Content")
     blog_date = st.date_input("Blog Date", value=datetime.now().date())
     
-    # Create blog post
+
     if st.button("Post Blog"):
         if blog_title and blog_content:
             blogs.append({
                 "title": blog_title, 
                 "content": blog_content, 
-                "date": blog_date.strftime('%Y-%m-%d')  # Format date for display
+                "date": blog_date.strftime('%Y-%m-%d')  
             })
             st.success("Blog Post Created!")
         else:
             st.error("Please fill in all fields.")
     
-    # Display blog posts
+    
     st.write('<p class="subheader-text">Blog Posts</p>', unsafe_allow_html=True)
     
     if blogs:
-        # Display each blog post
+      
         for blog in blogs:
-            st.write(f"{blog['title']}** - {blog['date']}")
+            st.write(f"**{blog['title']}** - {blog['date']}")
             st.write(blog['content'])
             st.write("---")
     else:
@@ -192,7 +192,7 @@ def meeting_management():
     if events["meetings"]:
     
         for index, meeting in enumerate(events["meetings"]):
-            st.write(f"*Meeting:* {meeting[0]}, *Participants:* {', '.join(meeting[1])}, *Date:* {meeting[2]}")
+            st.write(f"**Meeting:** {meeting[0]}, **Participants:** {', '.join(meeting[1])}, **Date:** {meeting[2]}")
             
           
             if st.button(f"Update Meeting {index + 1}", key=f"update_{index}"):
@@ -459,5 +459,5 @@ def onboarding_sessions():
     for s in events["onboarding_sessions"]:
         st.write(f"Session: {s[0]}, Date: {s[1]}")
 
-if _name_ == '_main_':
-    main()
+if __name__ == '__main__':
+    main()
